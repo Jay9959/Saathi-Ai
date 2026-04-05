@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saathi Ai - Login & Sign Up</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0d0d0d;
+      --bg-surface: #161616;
+      --accent-primary: #7c3aed;
+      --accent-secondary: #a855f7;
+      --accent-gradient: linear-gradient(135deg, #7c3aed, #a855f7, #ec4899);
+      --text-primary: #f1f1f1;
+      --text-secondary: #a1a1aa;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Animated background glow */
+    .bg-glow {
+      position: absolute;
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 70%);
+      top: -25vw;
+      right: -25vw;
+      z-index: -1;
+      filter: blur(80px);
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--accent-gradient);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .logo-text {
+      font-size: 24px;
+      font-weight: 700;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 4px;
+      background: rgba(255,255,255,0.03);
+      padding: 4px;
+      border-radius: 10px;
+      margin-bottom: 32px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      padding: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: var(--transition);
+    }
+
+    .tab-btn.active {
+      background: rgba(255,255,255,0.08);
+      color: var(--text-primary);
+    }
+
+    .auth-form {
+      display: none;
+    }
+
+    .auth-form.active {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      background: #111;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      color: var(--text-primary);
+      font-size: 14px;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .form-input:focus {
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: var(--accent-gradient);
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 14px;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 12px;
+      transition: var(--transition);
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(124, 58, 237, 0.4);
+    }
+
+    .social-auth {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .social-btn {
+      width: 100%;
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      color: var(--text-primary);
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .social-btn:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.15);
+      transform: translateY(-1px);
+    }
+
+    .social-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 4px;
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
+
+    .social-divider::before,
+    .social-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+
+    .error-msg {
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.3);
+      border-radius: 8px;
+      color: #f87171;
+      font-size: 13px;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      display: none;
+      text-align: center;
+    }
+</style>
+</head>
+<body>
+  <div class="bg-glow"></div>
+  
+  <div class="auth-card">
+    <div class="logo">
+      <div class="logo-icon">⚡</div>
+      <span class="logo-text">Saathi Ai</span>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('login')">Log In</button>
+      <button class="tab-btn" onclick="switchTab('signup')">Sign Up</button>
+    </div>
+
+    <!-- Login Form -->
+    <form id="loginForm" class="auth-form active" onsubmit="handleAuth(event, 'login')">
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="name@example.com" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-input" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="submit-btn" id="loginBtn">Continue</button>
+    </form>
+
+    <!-- Sign Up Form -->
+    <form id="signupForm" class="auth-form" onsubmit="handleAuth(event, 'signup')">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input type="text" class="form-input" placeholder="John Doe" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="name@example.com" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-input" placeholder="Create a password" required>
+      </div>
+      <button type="submit" class="submit-btn" id="signupBtn">Create Account</button>
+    </form>
+
+
+    <div class="social-auth">
+      <div id="oauthError" class="error-msg"></div>
+      <div class="social-divider">or continue with</div>
+      <button class="social-btn" id="googleBtn" onclick="loginWithGoogle()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        Continue with Google
+      </button>
+      <button class="social-btn" id="githubBtn" onclick="loginWithGitHub()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.341-3.369-1.341-.454-1.152-1.11-1.459-1.11-1.459-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.161 22 16.416 22 12c0-5.523-4.477-10-10-10z"/>
+        </svg>
+        Continue with GitHub
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const BACKEND = "http://localhost:5000";
+
+    // ─── Check for OAuth error on page load ───────────────────
+    window.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const error = params.get("error");
+      if (error) {
+        const errEl = document.getElementById("oauthError");
+        errEl.style.display = "block";
+        errEl.textContent =
+          error === "google_failed"
+            ? "⚠️ Google login failed. Please try again."
+            : "⚠️ GitHub login failed. Please try again.";
+      }
+    });
+
+    // ─── OAuth Button Handlers ────────────────────────────────
+    function loginWithGoogle() {
+      const btn = document.getElementById("googleBtn");
+      btn.disabled = true;
+      btn.textContent = "Redirecting to Google...";
+      window.location.href = `${BACKEND}/auth/google`;
+    }
+
+    function loginWithGitHub() {
+      const btn = document.getElementById("githubBtn");
+      btn.disabled = true;
+      btn.textContent = "Redirecting to GitHub...";
+      window.location.href = `${BACKEND}/auth/github`;
+    }
+
+    // ─── Tab Switcher ─────────────────────────────────────────
+    function switchTab(tab) {
+      const btns = document.querySelectorAll('.tab-btn');
+      const forms = document.querySelectorAll('.auth-form');
+      
+      btns.forEach(btn => btn.classList.remove('active'));
+      forms.forEach(form => form.classList.remove('active'));
+      
+      if (tab === 'login') {
+        btns[0].classList.add('active');
+        document.getElementById('loginForm').classList.add('active');
+      } else {
+        btns[1].classList.add('active');
+        document.getElementById('signupForm').classList.add('active');
+      }
+    }
+
+    // ─── Email/Password Auth ──────────────────────────────────
+    function handleAuth(event, type) {
+      event.preventDefault();
+      const form = event.target;
+      let name = "Jay";
+      let email = "name@example.com";
+
+      if (type === 'signup') {
+        name = form.querySelector('input[placeholder="John Doe"]').value;
+        email = form.querySelector('input[placeholder="name@example.com"]').value;
+      } else {
+        email = form.querySelector('input[placeholder="name@example.com"]').value;
+        name = email.split('@')[0];
+        name = name.charAt(0).toUpperCase() + name.slice(1);
+      }
+
+      localStorage.setItem("user_name", name);
+      localStorage.setItem("user_email", email);
+      sessionStorage.setItem("isLoggedIn", "true");
+      window.location.href = 'index.html';
+    }
+  </script>
+
+</body>
+</html>

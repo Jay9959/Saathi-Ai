@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saathi Ai</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <meta name="description" content="A powerful Saathibuilt with OpenAI API. Chat with AI instantly." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Marked.js for Markdown rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Highlight.js for code syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ═══ SIDEBAR ═══════════════════════════════════════════ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <div class="logo-icon">⚡</div>
+        <span class="logo-text">Saathi Ai</span>
+      </div>
+      <button class="sidebar-btn" id="sidebarCollapseBtn" title="Hide Sidebar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="18" height="18" x="3" y="3" rx="2" />
+          <path d="M9 3v18" />
+        </svg>
+      </button>
+    </div>
+    <!-- Chat History -->
+    <div class="history-section">
+      <div class="history-section-header">
+        <p class="history-label">Recent Chats</p>
+        <button class="new-chat-btn-small" id="newChatBtn" data-tooltip="New Chat">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="history-list" id="historyList">
+        <!-- Dynamically populated -->
+        <div class="history-empty">No chats yet. Start a conversation!</div>
+      </div>
+    </div>
+
+    <!-- Image History -->
+    <div class="history-section">
+      <div class="history-section-header">
+        <p class="history-label">Image Generations</p>
+        <button class="new-chat-btn-small new-image-btn-small" id="newImageBtn" data-tooltip="New image generate">
+           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="history-list" id="imageHistoryList">
+        <!-- Dynamically populated -->
+        <div class="history-empty">No images yet.</div>
+      </div>
+    </div>
+
+    <!-- Sidebar Footer -->
+    <div class="sidebar-footer">
+      <div class="user-container">
+        <button class="user-profile-btn" id="userProfileBtn" title="Account Menu">
+          <div class="user-avatar">J</div>
+          <div class="user-display">
+            <span class="user-name">Jay</span>
+            <span class="user-plan">Free Plan</span>
+          </div>
+        </button>
+        
+        <!-- User Dropdown Menu -->
+        <div class="user-menu" id="userMenu">
+          <div class="menu-header">
+            <div class="menu-avatar">JA</div>
+            <div class="menu-user-info">
+              <div class="menu-name">Jay</div>
+              <div class="menu-handle">@dobariyajay9959</div>
+            </div>
+          </div>
+          
+          <div class="menu-divider"></div>
+          
+          <div class="menu-items">
+            <button class="menu-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+              </svg>
+              Upgrade plan
+            </button>
+            <button class="menu-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16v-4M12 8h.01"></path>
+              </svg>
+              Personalization
+            </button>
+            <button class="menu-item" id="openProfileBtn">
+              <div class="menu-item-avatar" id="menuItemAvatar">J</div>
+              Profile
+            </button>
+
+            <button class="menu-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"></path>
+              </svg>
+              Settings
+            </button>
+            <div class="menu-divider"></div>
+            <button class="menu-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 16v-4M12 8h.01"></path>
+              </svg>
+              Help
+            </button>
+            <button class="menu-item logout">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"></path>
+              </svg>
+              Log out
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Sidebar Toggle for Mobile -->
+  <button class="sidebar-toggle" id="sidebarToggle" title="Toggle Sidebar">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="3" y1="6" x2="21" y2="6" />
+      <line x1="3" y1="12" x2="21" y2="12" />
+      <line x1="3" y1="18" x2="21" y2="18" />
+    </svg>
+  </button>
+
+  <!-- ═══ MAIN CHAT AREA ════════════════════════════════════ -->
+  <main class="main-content" id="mainContent">
+    <button class="menu-toggle-btn" id="menuToggleBtn" title="Show Sidebar">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect width="18" height="18" x="3" y="3" rx="2" />
+        <path d="M9 3v18" />
+      </svg>
+    </button>
+
+
+    <!-- Messages Container -->
+    <div class="messages-container" id="messagesContainer">
+
+      <!-- Welcome Screen -->
+      <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-icon">⚡</div>
+        <h1 class="welcome-title">Saathi Ai</h1>
+        <p class="welcome-subtitle">Your intelligent AI assistant. Ask me anything!</p>
+
+        <div class="suggestion-grid">
+          <button class="suggestion-card" onclick="useSuggestion('Explain quantum computing in simple terms')">
+            <span class="suggestion-icon">🔬</span>
+            <span>Explain quantum computing in simple terms</span>
+          </button>
+          <button class="suggestion-card"
+            onclick="useSuggestion('Write a Python function to sort a list of dictionaries')">
+            <span class="suggestion-icon">💻</span>
+            <span>Write a Python sort function for dictionaries</span>
+          </button>
+          <button class="suggestion-card" onclick="useSuggestion('Give me 5 tips to improve productivity')">
+            <span class="suggestion-icon">⚡</span>
+            <span>Give me 5 productivity tips</span>
+          </button>
+          <button class="suggestion-card" onclick="useSuggestion('Write a short poem about AI and the future')">
+            <span class="suggestion-icon">✨</span>
+            <span>Write a poem about AI and the future</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Input Area -->
+    <div class="input-area">
+
+      <!-- Image Model Selector (shows when image mode is ON) -->
+      <div class="img-model-row" id="imgModelRow">
+        <span class="img-model-label">🎨 Model:</span>
+        <select class="img-model-select" id="imgModelSelect">
+          <option value="flux">⚡ FLUX — Best Quality</option>
+          <option value="turbo">🚀 Turbo — Fastest</option>
+          <option value="flux-realism">📸 Flux Realism — Photo Realistic</option>
+          <option value="flux-anime">🎌 Flux Anime — Anime Style</option>
+          <option value="flux-3d">🧊 Flux 3D — 3D Render</option>
+          <option value="any-dark">🌑 Any Dark — Dark Theme</option>
+        </select>
+      </div>
+
+      <div class="input-wrapper">
+        <select class="model-select-chat" id="modelSelect" title="Select Chat Model">
+          <!-- Dynamically populated -->
+          <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
+        </select>
+        <button class="img-gen-btn" id="imgGenBtn" title="Generate Image">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+        </button>
+        <textarea class="message-input" id="messageInput" placeholder="Message Saathi Ai... (or /image your prompt)" rows="1"
+          maxlength="4000"></textarea>
+        <button class="send-btn" id="sendBtn" title="Send Message" disabled>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="22" y1="2" x2="11" y2="13" />
+            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+
+  <!-- ═══ MODALS ═══════════════════════════════════════════════ -->
+  <!-- Confirm Clear Chat Modal -->
+  <div class="modal-overlay" id="confirmModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Clear all chats?</h3>
+      </div>
+      <p class="modal-text">This will permanently delete all messages in this conversation. This action cannot be undone.</p>
+      <div class="modal-actions">
+        <button class="modal-btn cancel" id="modalCancelBtn">Cancel</button>
+        <button class="modal-btn confirm" id="modalConfirmBtn">Clear Chat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Profile Modal -->
+  <div class="modal-overlay" id="profileModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Edit profile</h3>
+      </div>
+      
+      <div class="profile-avatar-section">
+        <div class="profile-avatar-large" id="profileAvatarLarge">J</div>
+        <button class="avatar-edit-btn" id="triggerAvatarInput" title="Change Avatar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+            <circle cx="12" cy="13" r="4"></circle>
+          </svg>
+        </button>
+        <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+      </div>
+
+      <div class="profile-form">
+        <div class="profile-input-group">
+          <label class="profile-label">Display name</label>
+          <input type="text" class="profile-input" id="editDisplayName" placeholder="Jay">
+        </div>
+        <div class="profile-input-group">
+          <label class="profile-label">Username</label>
+          <input type="text" class="profile-input" id="editUsername" placeholder="dobariyajay9959">
+        </div>
+      </div>
+      
+      <p class="profile-hint">Your profile helps people recognize you. Your name and username are also used in the Saathi app.</p>
+
+      <div class="modal-actions">
+        <button class="modal-btn cancel" id="profileCancelBtn">Cancel</button>
+        <button class="modal-btn confirm" id="profileSaveBtn">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Lightbox Modal -->
+  <div class="lightbox-overlay" id="imageLightbox" style="display: none;">
+    <button class="lightbox-close" id="lightboxClose" title="Close">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="Fullscreen Image">
+    <div class="lightbox-actions">
+      <a href="#" id="lightboxDownload" download="saathi-image.jpg" class="lightbox-btn" title="Download High-Res">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Download
+      </a>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
