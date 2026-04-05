@@ -70,15 +70,27 @@ const getClientType = (modelId) => {
 };
 
 // ─── Middleware ───────────────────────────────────────────────
-app.use(cors()); // Allow all origins for easier deployment
+const isProduction = process.env.NODE_ENV === "production";
+
+app.use(cors({
+  origin: FRONTEND_URL,
+  credentials: true,
+}));
 app.use(express.json());
+
+// Trust proxy (required for secure cookies on Render/Railway/Heroku)
+if (isProduction) app.set("trust proxy", 1);
 
 // Session Middleware (required for Passport)
 app.use(session({
   secret: process.env.SESSION_SECRET || "saathi_secret",
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 },
+  cookie: { 
+    secure: isProduction,  // true on HTTPS, false on localhost
+    sameSite: isProduction ? "none" : "lax",
+    maxAge: 24 * 60 * 60 * 1000 
+  },
 }));
 
 // Passport Init
