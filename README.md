@@ -1,136 +1,87 @@
-# ⚡Saathi AI
+<div align="center">
+  <img src="https://img.icons8.com/color/144/artificial-intelligence.png" alt="Saathi AI Logo" width="120" />
+  <h1>✨ Saathi AI</h1>
+  <p><b>Your Smart, Fast, and Secure AI Companion</b></p>
 
-A full-stack Saathibuilt with **Node.js + Express + Groq API** on the backend and **pure HTML/CSS/JS** on the frontend.
-Groq offers **blazing-fast inference** (often 10x faster than OpenAI) and a **free tier** — perfect for this project.
-
----
-
-## 🚀 Features
-
-- ✅ Real-time **streaming responses** (Server-Sent Events)
-- ✅ **Markdown rendering** with syntax-highlighted code blocks
-- ✅ **Chat history** saved in localStorage
-- ✅ **Model selection** (GPT-3.5 Turbo, GPT-4, GPT-4 Turbo)
-- ✅ **Rate limiting** to protect the API
-- ✅ **Stop generation** mid-stream
-- ✅ **Responsive design** (mobile-friendly)
-- ✅ **Dark premium UI** with glassmorphism & animations
-- ✅ **Token usage counter**
-- ✅ **Copy code** button on code blocks
+  [![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)]()
+  [![License](https://img.shields.io/badge/License-MIT-blue.svg)]()
+  [![AI](https://img.shields.io/badge/AI-Gemini%20|%20LLaMA%20|%20Qwen-blueviolet.svg)]()
+</div>
 
 ---
 
-## 📁 Project Structure
+## 🌟 Overview
+**Saathi AI** is a premium, glassmorphic AI chat application built for high performance and low latency. It supports multiple state-of-the-art LLMs and image generation capabilities, all within a sleek, modern interface.
 
-```
-ChatGpt/
-├── backend/
-│   ├── server.js          ← Express server + OpenAI integration
-│   ├── package.json       ← Backend dependencies
-│   └── .env               ← Your OpenAI API key (create this!)
-├── frontend/
-│   ├── index.html         ← Chat UI
-│   ├── style.css          ← Premium dark design
-│   └── script.js          ← All frontend logic
-└── README.md
-```
+### 🚀 Key Features
+- **⚡ Super Fast Chat:** Real-time streaming responses using Gemini and Groq APIs.
+- **🎨 Image Generation:** Create stunning visuals using the integrated **Pollinations AI** engine.
+- **💾 Persistent History:** Chats and images are safely stored in your browser's local storage.
+- **💎 Premium UI:** A beautiful, responsive glassmorphic design that works on mobile and desktop.
+- **🛡️ Secure Auth:** Built-in Google and GitHub authentication support.
 
 ---
 
-## ⚙️ Setup Instructions
+## 🧠 Supported AI Models
+| Model Name | Purpose | Limits |
+| :--- | :--- | :--- |
+| **Gemini 2.5 Flash** | General Intelligence & Speed | 1,500 Requests/Day |
+| **LLaMA 3.3 70B** | Advanced Logic & Coding | 30 RPM / 6k TPM |
+| **LLaMA 3.1 8B** | Instant Conversations | 30 RPM / 30k TPM |
+| **Qwen 3 (32B)** | Deep Reasoning | Next-Gen Performance |
 
-### Step 1 — Get OpenAI API Key
-1. Go to https://platform.openai.com/api-keys
-2. Create a new API key
-3. Copy it
+---
 
-### Step 2 — Setup Backend
+## 🛠️ Quick Setup
+
+### 1. Prerequisites
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- API Keys for [Google Gemini](https://aistudio.google.com/app/apikey) and [Groq](https://console.groq.com/keys)
+
+### 2. Installation
 ```bash
+# Clone the repository
+git clone https://github.com/Jay9959/Saathi-Ai.git
+
+# Install dependencies
 cd backend
 npm install
 ```
 
-Create a `.env` file:
+### 3. Environment Configuration
+Create a `.env` file in the `backend/` folder and add your keys:
 ```env
-GROQ_API_KEY=gsk_your_groq_api_key_here
+GEMINI_API_KEY=your_gemini_key
+GROQ_API_KEY=your_groq_key
 PORT=5000
 ```
+*(Note: Never share or upload your `.env` file!)*
 
-> 🔑 Get a **free** Groq API key at: https://console.groq.com/keys
-
-### Step 3 — Start Backend
+### 4. Run the Server
 ```bash
-cd backend
-npm run dev         # Development (with auto-restart)
-# OR
-npm start           # Production
+node server.js
 ```
-
-Backend will run at: **http://localhost:5000**
-
-### Step 4 — Open Frontend
-Open `frontend/index.html` in your browser.
-
-> **Tip:** Use VS Code's Live Server extension for a better experience!
+Open `http://localhost:5000` in your browser to start chatting!
 
 ---
 
-## 🔌 API Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/` | Health check |
-| `GET` | `/api/models` | List available models |
-| `POST` | `/api/chat` | Send message (regular) |
-| `POST` | `/api/chat/stream` | Send message (streaming) |
-
-### POST /api/chat — Request Body
-```json
-{
-  "messages": [
-    { "role": "user", "content": "Hello!" }
-  ],
-  "model": "llama3-8b-8192"
-}
-```
+## 🎨 UI/UX Previews
+The app features:
+- **Dark Mode** with vibrant accents.
+- **Glassmorphic** modals and sidebars.
+- **Smooth Animations** for message loading.
 
 ---
 
-## 🤖 Available Models (Groq)
+## 🤝 Contributing
+Contributions are welcome! Feel free to fork the repo and submit a PR for new features or UI enhancements.
 
-| Model | ID | Speed |
-|-------|----|-------|
-| LLaMA 3 8B | `llama3-8b-8192` | ⚡ Fastest |
-| LLaMA 3 70B | `llama3-70b-8192` | 🧠 Powerful |
-| Mixtral 8x7B | `mixtral-8x7b-32768` | 📄 Long context |
-| Gemma 2 9B | `gemma2-9b-it` | 💎 Google's model |
-| LLaMA 3.3 70B | `llama-3.3-70b-versatile` | 🚀 Latest |
+## 📄 License
+This project is licensed under the MIT License.
 
 ---
 
-## 🛠️ Technologies Used
-
-| Layer | Technology |
-|-------|----------|
-| Backend | Node.js + Express.js |
-| AI | Groq API (LLaMA 3, Mixtral, Gemma) |
-| Streaming | Server-Sent Events (SSE) |
-| Frontend | HTML + CSS + JavaScript |
-| Markdown | Marked.js |
-| Code Highlighting | Highlight.js |
-| Fonts | Google Fonts (Inter) |
-
----
-
-## 🎨 UI Highlights
-
-- Deep dark theme (`#0d0d0d`) with purple accent (`#7c3aed`)
-- Floating logo animation
-- Smooth message entrance animations
-- Streaming text cursor effect
-- Mobile responsive sidebar
-- Toast notifications
-
----
-
-Made with ⚡ bySaathi AI
+<div align="center">
+  <p>Built with ❤️ by <b>Jay</b></p>
+  <a href="https://github.com/Jay9959">GitHub Profile</a>
+</div>
