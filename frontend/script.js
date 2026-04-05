@@ -5,9 +5,10 @@
 
 // ─── Configuration ────────────────────────────────────────────
 const CONFIG = {
-  API_BASE: "http://localhost:5000/api",  // Backend URL
-  MAX_HISTORY: 20,                         // Max messages to keep in history
-  DEFAULT_MODEL: "gemini-2.5-flash",        // Preferred default
+  // Directly using your Live Render URL for backend communication
+  API_BASE: "https://saathi-ai-3zjr.onrender.com/api",
+  MAX_HISTORY: 20,
+  DEFAULT_MODEL: "gemini-2.5-flash",
 };
 
 // ─── App State ────────────────────────────────────────────────

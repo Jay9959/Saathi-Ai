@@ -70,7 +70,7 @@ const getClientType = (modelId) => {
 };
 
 // ─── Middleware ───────────────────────────────────────────────
-app.use(cors({ origin: FRONTEND_URL, credentials: true }));
+app.use(cors()); // Allow all origins for easier deployment
 app.use(express.json());
 
 // Session Middleware (required for Passport)
