@@ -16,7 +16,7 @@ const OpenAI = require("openai");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const rateLimit = require("express-rate-limit");
 
-const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5000";
+const FRONTEND_URL = process.env.FRONTEND_URL || "https://ai-chatboat-saathi-ai.netlify.app";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
